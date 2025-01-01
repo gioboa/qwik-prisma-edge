@@ -1,47 +1,52 @@
 {
   "name": "my-qwik-empty-starter",
-  "description": "App with Routing built-in ready to create your app",
+  "description": "Blank project with routing included",
   "engines": {
-    "node": ">=15.0.0"
+    "node": "^18.17.0 || ^20.3.0 || >=21.0.0"
   },
+  "engines-annotation": "Mostly required by sharp which needs a Node-API v9 compatible runtime",
   "private": true,
   "trustedDependencies": [
     "sharp"
   ],
+  "trustedDependencies-annotation": "Needed for bun to allow running install scripts",
+  "type": "module",
   "scripts": {
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
+    "build.server": "vite build -c adapters/vercel-edge/vite.config.mts",
     "build.types": "tsc --incremental --noEmit",
-    "deploy": "echo 'Run \"npm run qwik add\" to install a server adapter'",
+    "deploy": "vercel deploy",
     "dev": "vite --mode ssr",
     "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
     "lint": "eslint \"src/**/*.ts*\"",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate && ls -l node_modules",
     "preview": "qwik build preview && vite preview --open",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "postbuild": "cp node_modules/@prisma/engines/*query* .vercel_build_output/functions/node/render/;cp prisma/schema.prisma .vercel_build_output/functions/node/render/",
     "prisma:migrate:prod": "prisma migrate deploy",
     "start": "vite --open --mode ssr",
     "qwik": "qwik"
   },
   "devDependencies": {
-    "@builder.io/qwik": "^1.3.0",
-    "@builder.io/qwik-city": "^1.3.0",
-    "@prisma/client": "5.7.0",
-    "@types/eslint": "^8.44.9",
-    "@types/node": "^20.10.4",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
-    "eslint": "^8.55.0",
-    "eslint-plugin-qwik": "^1.3.0",
-    "prettier": "^3.1.1",
-    "prisma": "^5.7.0",
-    "typescript": "^5.3.3",
-    "undici": "^6.0.1",
-    "vite": "^5.0.9",
-    "vite-tsconfig-paths": "^4.2.2"
+    "@prisma/client": "5.3.1",
+    "@qwik.dev/core": "^2.0.0-alpha.4",
+    "@qwik.dev/router": "^2.0.0-alpha.4",
+    "@types/eslint": "8.56.10",
+    "@types/node": "20.14.11",
+    "@typescript-eslint/eslint-plugin": "7.16.1",
+    "@typescript-eslint/parser": "7.16.1",
+    "eslint": "8.57.0",
+    "eslint-plugin-qwik": "^2.0.0-alpha.4",
+    "prettier": "3.3.3",
+    "prisma": "^5.3.1",
+    "typescript": "5.4.5",
+    "vercel": "^29.1.1",
+    "vite": "5.4.10",
+    "vite-tsconfig-paths": "^4.2.1"
   }
 }
