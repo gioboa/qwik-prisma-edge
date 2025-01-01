@@ -27,7 +27,6 @@
     "preview": "qwik build preview && vite preview --open",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "postbuild": "cp node_modules/@prisma/engines/*query* .vercel_build_output/functions/node/render/;cp prisma/schema.prisma .vercel_build_output/functions/node/render/",
     "prisma:migrate:prod": "prisma migrate deploy",
     "start": "vite --open --mode ssr",
     "qwik": "qwik"
